@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CalculusCS
+{
+    public class Secant : Function
+    {
+        public static readonly Secant Sec = new Secant();
+        public override double Evaluate(double x)
+        {
+            return Coefficient / Math.Cos(x);
+        }
+
+        Secant()
+        { }
+        public override Function Clone()
+        {
+            return new Secant() { Coefficient = this.Coefficient };
+        }
+
+        public override Function Derivative()
+        {
+            return Secant.Sec * Tangent.Tan;
+        }
+    }
+}
