@@ -49,7 +49,7 @@ namespace CalculusCS
         {
             return EvaluateFunction(function.RemoveWhiteSpace());
         }*/
-        public static Function EvaluateFunction(string s)
+        static Function EvaluateFunction(string s)
         {
             if (string.IsNullOrWhiteSpace(s)) throw new ArgumentException("Cannot evaluate an empty string");
             var plus = s.SplitFirst('+');
@@ -118,14 +118,24 @@ namespace CalculusCS
             return new Quotient(x, y);
         }
 
-        public Function this[Function function]
+        /// <summary>
+        /// Composes the function with the inner function
+        /// </summary>
+        /// <param name="inner"></param>
+        /// <returns></returns>
+        public Function this[Function inner]
         {
             get
             {
-                return Compose(function);
+                return Compose(inner);
             }
         }
 
+        /// <summary>
+        /// evaluates the function at x
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         public double this[double x]
         {
             get
@@ -134,9 +144,14 @@ namespace CalculusCS
             }
         }
 
-        public Function Compose(Function function)
+        /// <summary>
+        /// Composes the inner function with the function calling compose
+        /// </summary>
+        /// <param name="function"></param>
+        /// <returns></returns>
+        public Function Compose(Function inner)
         {
-            return new Composition(this, function);
+            return new Composition(this, inner);
         }
 
         static void Sanitize(ref Function func)
@@ -154,6 +169,11 @@ namespace CalculusCS
             }
         }
 
+        /// <summary>
+        /// Takes the derivative of the function
+        /// </summary>
+        /// <param name="function"></param>
+        /// <returns></returns>
         public static Function operator ~(Function function)
         {
             return function.Derivative();
